@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>오디오 게임</title>
+</head>
+<body>
+    <h1>오디오 게임</h1>
+
+    <audio id="audio" controls>
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <div>
+        <button onclick="playRandomAudio()">랜덤 오디오 재생</button>
+    </div>
+
+    <div>
+        <label for="guess">올바른 제목을 입력하세요:</label>
+        <input type="text" id="guess">
+        <button onclick="checkAnswer()">정답 확인</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const audioFiles = [
+            { src: '간발의차이.m4a', answer: '간발의차이.m4a' },
+            { src: '라데츠키행진곡.m4a', answer: '라데츠키행진곡' },
+            { src: '라캄파넬라.m4a', answer: '라캄파넬라' },
+            { src: '마왕.m4a', answer: '마왕' },
+            { src: '아름답고푸른도나우강.m4a', answer: '아름답고푸른도나우강' },
+            { src: '엘리제를위하여.m4a', answer: '엘리제를위하여' },
+            { src: '울게하소서.m4a', answer: '울게하소서' }
+        ];
+
+        const audioElement = document.getElementById('audio');
+        const guessInput = document.getElementById('guess');
+        const resultDiv = document.getElementById('result');
+
+        function playRandomAudio() {
+            const randomIndex = Math.floor(Math.random() * audioFiles.length);
+            const randomAudio = audioFiles[randomIndex];
+            audioElement.src = randomAudio.src;
+            audioElement.play();
+        }
+
+        function checkAnswer() {
+            const userGuess = guessInput.value;
+            const currentAudioIndex = audioFiles.findIndex(audio => audio.src === audioElement.src);
+            const correctAnswer = audioFiles[currentAudioIndex].answer;
+
+            if (userGuess.toLowerCase() === correctAnswer.toLowerCase()) {
+                resultDiv.innerHTML = '정답입니다!';
+            } else {
+                resultDiv.innerHTML = '틀렸습니다. 정답은 ' + correctAnswer + ' 입니다.';
+            }
+        }
+    </script>
+</body>
+</html>
